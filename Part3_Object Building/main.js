@@ -1,3 +1,11 @@
+/*
+  Filename: main.js
+  Author: Gurinder Singh
+  Date: 2025-08-01
+  Description: Creates and animates colorful balls bouncing within the browser window on a black canvas background.
+*/
+
+
 // setup canvas
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
