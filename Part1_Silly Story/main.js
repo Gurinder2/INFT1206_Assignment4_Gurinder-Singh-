@@ -1,3 +1,13 @@
+/*
+  Filename: main.js
+  Author: Gurinder Singh
+  Date: 2025-08-01
+  Description: 
+    This JavaScript code powers the Random Story Generator. 
+    It replaces placeholders in a story template with random selections,
+    updates units based on user preference, and displays the result.
+*/
+
 // 1. COMPLETE VARIABLE AND FUNCTION DEFINITIONS
 const customName = document.getElementById('customname');
 const randomize = document.querySelector('.randomize');
@@ -32,7 +42,7 @@ const insertZ = [
 // 3. EVENT LISTENER AND FULL FUNCTION DEFINITION
 randomize.addEventListener('click', result);
 
-function result() {
+function result() {}
   let newStory = storyText;
 
   // Pick random phrases

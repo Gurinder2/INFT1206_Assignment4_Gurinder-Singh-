@@ -1,89 +1,79 @@
-/*
-    Name: Gurinder Dhillon
-    File: main.js
-    Date: 31 July 2025
-    Description : This JavaScript file defines the Ball class and animates multiple balls bouncing and changing color on collision.
-*/
-const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
-const width = canvas.width;
-const height = canvas.height;
+// setup canvas
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 
+const width = (canvas.width = window.innerWidth);
+const height = (canvas.height = window.innerHeight);
+
+// function to generate random number
 function random(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function randomColor() {
-  return `rgb(${random(0,255)}, ${random(0,255)}, ${random(0,255)})`;
+// function to generate random color
+function randomRGB() {
+  return `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`;
 }
 
-class Ball {
-  constructor(x, y, velX, velY, color, size) {
-    this.x = x;
-    this.y = y;
-    this.velX = velX;
-    this.velY = velY;
-    this.color = color;
-    this.size = size;
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    ctx.fill();
-  }
-
-  update() {
-    if ((this.x + this.size) >= width || (this.x - this.size) <= 0) this.velX = -this.velX;
-    if ((this.y + this.size) >= height || (this.y - this.size) <= 0) this.velY = -this.velY;
-
-    this.x += this.velX;
-    this.y += this.velY;
-  }
-
-  collisionDetect(balls) {
-    for (const ball of balls) {
-      if (this !== ball) {
-        const dx = this.x - ball.x;
-        const dy = this.y - ball.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < this.size + ball.size) {
-          this.color = ball.color = randomColor();
-        }
-      }
-    }
-  }
+// Ball constructor
+function Ball(x, y, velX, velY, color, size) {
+  this.x = x;
+  this.y = y;
+  this.velX = velX;
+  this.velY = velY;
+  this.color = color;
+  this.size = size;
 }
 
-const balls = [];
+// Draw method
+Ball.prototype.draw = function () {
+  ctx.beginPath();
+  ctx.fillStyle = this.color;
+  ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+  ctx.fill();
+};
+
+// Update position and bounce logic
+Ball.prototype.update = function () {
+  if ((this.x + this.size) >= width || (this.x - this.size) <= 0) {
+    this.velX = -this.velX;
+  }
+
+  if ((this.y + this.size) >= height || (this.y - this.size) <= 0) {
+    this.velY = -this.velY;
+  }
+
+  this.x += this.velX;
+  this.y += this.velY;
+};
+
+// Create array of balls
+let balls = [];
 
 while (balls.length < 25) {
   const size = random(10, 20);
-  let ball = new Ball(
-    random(0 + size, width - size),
-    random(0 + size, height - size),
-    random(-7, 7),
-    random(-7, 7),
-    randomColor(),
+  const ball = new Ball(
+    random(size, width - size),
+    random(size, height - size),
+    random(-5, 5),
+    random(-5, 5),
+    randomRGB(),
     size
   );
   balls.push(ball);
 }
 
+// Animation loop with black background
 function loop() {
-  ctx.fillStyle = 'rgba(0,0,0,0.25)';
-  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = "black"; // Set background color
+  ctx.fillRect(0, 0, width, height); // Fill the whole canvas
 
-  for (const ball of balls) {
-    ball.draw();
-    ball.update();
-    ball.collisionDetect(balls);
+  for (let i = 0; i < balls.length; i++) {
+    balls[i].draw();
+    balls[i].update();
   }
 
-  requestAnimationFrame(loop);
+  requestAnimationFrame(loop); // Repeat the loop
 }
 
-loop();
-
+loop(); // Start the animation

@@ -1,3 +1,11 @@
+/*
+  Filename: main.js
+  Author: Gurinder Singh
+  Date: 2025-08-01
+  Description: 
+    Creates thumbnails, updates main image on click, and toggles dark/light overlay.
+*/
+
 const displayedImage = document.querySelector('.displayed-img');
 const thumbBar = document.querySelector('.thumb-bar');
 
