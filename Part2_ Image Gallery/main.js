@@ -24,13 +24,18 @@ const altTexts = {
 };
 
 /* Looping through images */
-
-
-
+for (let i = 0; i < imageFilenames.length; i++) {
 const newImage = document.createElement('img');
-newImage.setAttribute('src', xxx);
-newImage.setAttribute('alt', xxx);
+newImage.setAttribute('src', `images/${imageFilenames[i]}`); );
+newImage.setAttribute('alt', altTexts[imageFilenames[i]]););
 thumbBar.appendChild(newImage);
+
+// Event listener to change displayed image
+  newImage.addEventListener('click', () => {
+    displayedImage.src = `images/${imageFilenames[i]}`;
+    displayedImage.alt = altTexts[imageFilenames[i]];
+  });
+}
 
 /* Wiring up the Darken/Lighten button */
 btn.addEventListener('click', () => {
