@@ -13,7 +13,6 @@ const imageFilenames = [
   'pic5.jpg'
 ];
 
-
 /* Declaring the alternative text for each image file */
 const altTexts = {
   'pic1.jpg': 'Closeup of a human eye',
@@ -25,15 +24,15 @@ const altTexts = {
 
 /* Looping through images */
 for (let i = 0; i < imageFilenames.length; i++) {
-const newImage = document.createElement('img');
-newImage.setAttribute('src', `images/${imageFilenames[i]}`); );
-newImage.setAttribute('alt', altTexts[imageFilenames[i]]););
-thumbBar.appendChild(newImage);
+  const newImage = document.createElement('img');
+  newImage.setAttribute('src', `images/${imageFilenames[i]}`);
+  newImage.setAttribute('alt', altTexts[imageFilenames[i]]);
+  thumbBar.appendChild(newImage);
 
-// Event listener to change displayed image
+  // Event listener to change displayed image
   newImage.addEventListener('click', () => {
-    displayedImage.src = `images/${imageFilenames[i]}`;
-    displayedImage.alt = altTexts[imageFilenames[i]];
+    displayedImage.setAttribute('src', `images/${imageFilenames[i]}`);
+    displayedImage.setAttribute('alt', altTexts[imageFilenames[i]]);
   });
 }
 

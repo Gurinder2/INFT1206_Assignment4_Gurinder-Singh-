@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Random Story Generator</title>
+  <style>
+    .story {
+      visibility: hidden;
+      margin-top: 20px;
+      font-size: 1.2em;
+      max-width: 600px;
+      color: orange;
+      visibility: hidden;
+      margin-top: 20px;
+      font-size: 1.2em;
+      max-width: 600px;
+
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Random Story Generator</h1>
+
+  <label for="customname">Enter custom name:</label>
+  <input id="customname" type="text" placeholder="Enter custom name" />
+
+  <label>
+    <input type="checkbox" id="uk" />
+    Use UK units
+  </label>
+
+  <button class="randomize">Generate Random Story</button>
+
+  <p class="story"></p>
+
+  <script>
+    // 1. COMPLETE VARIABLE AND FUNCTION DEFINITIONS
+    const customName = document.getElementById('customname');
+    const randomize = document.querySelector('.randomize');
+    const story = document.querySelector('.story');
+
+    function randomValueFromArray(array) {
+      const random = Math.floor(Math.random() * array.length);
+      return array[random];
+    }
+
+    // 2. RAW TEXT STRINGS
+    const storyText = 'It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.';
+
+    const insertX = [
+      'Willy the Goblin',
+      'Big Daddy',
+      'Father Christmas'
+    ];
+
+    const insertY = [
+      'the soup kitchen',
+      'Disneyland',
+      'the White House'
+    ];
+
+    const insertZ = [
+      'spontaneously combusted',
+      'melted into a puddle on the sidewalk',
+      'turned into a slug and crawled away'
+    ];
+
+    // 3. EVENT LISTENER AND FULL FUNCTION DEFINITION
+    randomize.addEventListener('click', result);
+
+    function result() {
+      let newStory = storyText;
+
+      // Pick random phrases
+      const xItem = randomValueFromArray(insertX);
+      const yItem = randomValueFromArray(insertY);
+      const zItem = randomValueFromArray(insertZ);
+
+      // Replace placeholders with random phrases
+      newStory = newStory.replaceAll(':insertx:', xItem);
+      newStory = newStory.replace(':inserty:', yItem);
+      newStory = newStory.replace(':insertz:', zItem);
+
+      // Replace "Bob" with custom name if entered
+      if (customName.value !== '') {
+        const name = customName.value;
+        newStory = newStory.replace('Bob', name);
+      }
+
+      // Convert units if UK checkbox is checked
+      if (document.getElementById('uk').checked) {
+        const weight = Math.round(300 * 0.071429) + ' stone'; // pounds to stone
+        const temperature = Math.round((94 - 32) * 5 / 9) + ' centigrade'; // F to C
+
+        newStory = newStory.replace('94 fahrenheit', temperature);
+        newStory = newStory.replace('300 pounds', weight);
+      }
+
+      // Display the story and make it visible
+      story.textContent = newStory;
+      story.style.visibility = 'visible';
+    }
+  </script>
+
+</body>
+</html>
